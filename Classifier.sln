@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassifierRbrn", "ClassifierRbrn\ClassifierRbrn.csproj", "{B815CCCB-C7FC-4F8D-9689-67F18F89D321}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classifier", "ClassifierRbrn\Classifier.csproj", "{B815CCCB-C7FC-4F8D-9689-67F18F89D321}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classifier.Tests", "Classifier.Tests\Classifier.Tests.csproj", "{26669193-76C6-4AE0-BA98-0D3F120A0207}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{652D8246-B83B-44E4-9E68-F10AFD03F5D7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serializators", "Serializators\Serializators.csproj", "{3E39FC8F-3DEA-4C61-99EC-4BA9AEEBF500}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F6186CFD-3686-4CD5-B5A8-9C8E596B9D83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodesMutator", "CodesMutator\CodesMutator.csproj", "{B81B4BA7-13F0-4F93-A281-0B5FB8FD63A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,11 +45,16 @@ Global
 		{3E39FC8F-3DEA-4C61-99EC-4BA9AEEBF500}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E39FC8F-3DEA-4C61-99EC-4BA9AEEBF500}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E39FC8F-3DEA-4C61-99EC-4BA9AEEBF500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B81B4BA7-13F0-4F93-A281-0B5FB8FD63A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B81B4BA7-13F0-4F93-A281-0B5FB8FD63A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B81B4BA7-13F0-4F93-A281-0B5FB8FD63A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B81B4BA7-13F0-4F93-A281-0B5FB8FD63A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{26669193-76C6-4AE0-BA98-0D3F120A0207} = {F6186CFD-3686-4CD5-B5A8-9C8E596B9D83}
 		{711AE49F-7B52-4692-B55A-6763B866B449} = {E9510D8E-AB79-4BE3-B206-69185D0B4D15}
 		{652D8246-B83B-44E4-9E68-F10AFD03F5D7} = {E9510D8E-AB79-4BE3-B206-69185D0B4D15}
 	EndGlobalSection

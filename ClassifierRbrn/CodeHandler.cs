@@ -79,7 +79,7 @@ namespace Classifier
                     "1.14", "1.15", "1.16", "1.17", "1.18", "1.19", "1.20"});
             baseCodes.Add("1.1", new List<string> { "1.2", "1.3", "1.4", "1.5", "1.6" });
             baseCodes.Add("1.7", new List<string> { "1.8", "1.9", "1.10", "1.11", "1.15", "1.19", "1.20" });
-            baseCodes.Add("2.0", new List<string> { "2.1", "2.1.1", "2.2", "2.3", "2.5", "2.6"});
+            baseCodes.Add("2.0", new List<string> { "2.1", "2.1.1", "2.2", "2.3", "2.5", "2.6", "13.1", "13.2" });
             baseCodes.Add("2.7", new List<string> { "3.1", "3.2", "3.3", "3.4", "3.4.1.0", "3.5.1.0",
                 "3.6", "3.7", "3.10.1", "4.1", "4.3", "4.4", "4.6", "5.1.2", "5.1.3" });
             baseCodes.Add("3.0", new List<string> { "3.1", "3.1.1", "3.1.2", "3.2", "3.2.1", "3.2.2", "3.2.3",
@@ -235,11 +235,11 @@ namespace Classifier
         /// </summary>
         private void Type230Fix()
         {
-            var isKindCode3004Exist = Codes.Exists("2.7, 2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4");
+            var isKindCode3004Exist = Codes.Exists("2.7, 2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.91");
 
             if (IsHousingCodes() && isKindCode3004Exist)
             {
-                Codes.RemoveAll("2.7, 2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4");
+                Codes.RemoveAll("2.7, 2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.91");
             }
         }
 
@@ -248,17 +248,17 @@ namespace Classifier
         /// </summary>
         private void Type130Fix()
         {
-            var isKindCode3004Exist = Codes.Exists("2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4");
+            var isKindCode3004Exist = Codes.Exists("2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.91");
             var isType100 = Codes.Nodes.Exists(p => p.Type.Equals("100") && !p.Code.Equals("3.1.2"));
 
             if (isType100 && isKindCode3004Exist)
             {
-                Codes.RemoveAll("2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4");
+                Codes.RemoveAll("2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.91");
             }
         }
 
         /// <summary>
-        /// Удаляет код 12.0.1, если присутствет слово "благоустройство"
+        /// Удаляет код 12.0.2, если присутствет слово "благоустройство"
         /// и любой другой индекс
         /// </summary>
         private void LandscapingFix()
@@ -366,8 +366,9 @@ namespace Classifier
         {
             SomeCodesCut("7.1, 7.1.1, 7.2, 7.2.1", "100, 200, 300", () => { return !Codes.ExistsKind("3005"); });
             SomeCodesCut("13.1", "200");
-            SomeCodesCut("12.0.1, 12.0.2", "100, 200, 300, 800");
+            SomeCodesCut("12.0.1, 12.0.2, 12.0", "100, 200, 300, 800");
             SomeCodesCut("9.3", "100, 200, 300");
+            SomeCodesCut("7.3, 7.6", "300", () => { return Codes.ExistsKind("3005"); });
         }
 
         #region FederalCodesBehavior
@@ -433,11 +434,11 @@ namespace Classifier
             ElectricityStationsWithAreaLessThan300();
             Type230Fix();
             Type130Fix();
-            LandscapingFix();
             HousingAndRecreationFix();
             GasPipelineFix();
             SpeciallyProtectedAreaFix();
             SomeCodesFix();
+            LandscapingFix();
         }
     }
 }

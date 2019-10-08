@@ -91,6 +91,13 @@ namespace Classifier
         bool ExistsKind(string codes);
 
         /// <summary>
+        /// Определяет полное соответствие строки списку кодов
+        /// </summary>
+        /// <param name="codes"></param>
+        /// <returns></returns>
+        bool Equals(string codes);
+
+        /// <summary>
         /// Возвращает строку, содержащую все индексы ВРИ, кроме
         /// переданных в аргументе
         /// </summary>
@@ -148,51 +155,9 @@ namespace Classifier
         void RemoveAll(string codes);
 
         IEnumerator<INode> GetEnumerator();
-    }
+    }    
 
-    public interface ICodesTypes
-    {
-        /// <summary>
-        /// Возвращает количество элементов коллекции Nodes
-        /// </summary>
-        int Count { get; }
-
-        /// <summary>
-        /// Определяет, содержит ли Nodes типы, переданные в аргументе
-        /// </summary>
-        /// <param name="codes"></param>
-        /// <returns></returns>
-        bool ExistsType(IEnumerable<string> codes);
-
-        /// <summary>
-        /// Определяет, содержит ли Nodes типы, переданные в аргументе
-        /// </summary>
-        /// <param name="codes"></param>
-        /// <returns></returns>
-        bool ExistsType(string codes);
-
-        /// <summary>
-        /// Возвращает строку, содержащую все индексы ВРИ, кроме
-        /// переданных в аргументе
-        /// </summary>
-        /// <param name="vri"></param>
-        /// <returns></returns>
-        string Except(string vri);
-
-        /// <summary>
-        /// Возвращает коллекцию уникальных типов Nodes
-        /// </summary>
-        /// <returns></returns>
-        List<string> GetTypes();
-
-        /// <summary>
-        /// Возвращает коллекцию уникальных видов Nodes
-        /// </summary>
-        /// <returns></returns>
-        List<string> GetKinds();
-    }
-
-    internal sealed class Codes : ICodes, IEnumerable<INode>
+    public sealed class Codes : ICodes, IEnumerable<INode>
     {
         INodesCollection mf;
         public List<INode> Nodes { get; private set; }
@@ -273,6 +238,11 @@ namespace Classifier
             return ExistsKind(result);
         }
 
+        public bool Equals(string codes)
+        {
+            return Equals(Show, codes);
+        }
+
         public string Except(string vri)
         {
             string result = "";
@@ -312,6 +282,12 @@ namespace Classifier
         {
             IComparer<INode> comparer = new CodeComparer();
             Nodes.Sort(comparer);
+        }
+
+        public void Distinct()
+        {
+            var result = Nodes.Distinct().ToList();
+            this.Nodes = result;
         }
 
         public List<string> GetTypes()

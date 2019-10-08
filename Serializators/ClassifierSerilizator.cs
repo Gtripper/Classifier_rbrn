@@ -33,7 +33,7 @@ namespace Serializators
             , bool isMaintenance, int type, int kind)
         {
             ClassifierResults results = new ClassifierResults();
-            results.ID = id;
+            results.ID = id + 1;
             results.CadNum = cadNum;
             results.VRI_List = vri_list;
             results.Matches = matches;

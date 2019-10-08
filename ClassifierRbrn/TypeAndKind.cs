@@ -24,7 +24,7 @@ namespace Classifier
     }
 
 
-    class TypeAndKind : ITypeAndKind
+    public class TypeAndKind : ITypeAndKind
     {
         private ICodes codes;
         private string cutter;

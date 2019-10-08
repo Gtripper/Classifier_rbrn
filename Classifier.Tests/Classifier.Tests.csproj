@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassifierRbrn\ClassifierRbrn.csproj" />
+    <ProjectReference Include="..\ClassifierRbrn\Classifier.csproj" />
   </ItemGroup>
 
 </Project>

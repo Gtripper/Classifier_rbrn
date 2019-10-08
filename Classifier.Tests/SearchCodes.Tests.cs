@@ -272,6 +272,7 @@ namespace Classifier.Tests
         }
 
         [TestCase("магазины(4.4); общественное питание(4.6); развлечения(4.8)", true)]
+        [TestCase("природно-познавательный туризм (5.2) (земельные участки, предназначенные для размещения объектов рекреационного и лечебно-оздоровительног", true)]
         public void ISearch_IsFederalSearch_ReturnsTrue(string input, bool expected)
         {
             ISearchCodes Sample = new SearchCodes(input, new Codes(mf), mf);

@@ -20,7 +20,7 @@ namespace Classifier.Tests
         [TestCase("3.2.1, 3.2.2, 3.2.3", 100)]
         [TestCase("2.6, 3.1.1", 230)]
         [TestCase("2.6, 9.3", 999)]
-        [TestCase("7.4, 6.9", 300)]
+        [TestCase("7.2.2, 6.9", 300)]
         [TestCase("", 777)]
         public void ITypeAndKind_CheckCorrectType(string vri, int type)
         {

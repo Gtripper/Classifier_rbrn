@@ -20,7 +20,7 @@ namespace Classifier
         bool IsMainSearch { get; }
 
         event Action<bool, string> SendFederalCode;
-        event Action<bool> IsFedSearch;
+        event Func<bool> IsFederalCodes;
     }
 
 
@@ -51,12 +51,12 @@ namespace Classifier
 
         #region event
         public event Action<bool, string> SendFederalCode;
-        public event Action<bool> IsFedSearch;
+        public event Func<bool> IsFederalCodes;
         #endregion
 
         public SearchCodes(string Input, ICodes codes, INodesCollection mf)
         {
-            input = Input;
+            input = BullshitCleaner(Input);
             _matches = new StringBuilder("");
             Codes = codes;
             this.mf = mf;
@@ -84,7 +84,7 @@ namespace Classifier
                         IsFederalSearch = true;
                         IsPZZSearch = false;
                         IsMainSearch = false;
-                        IsFedSearch?.Invoke(IsFederalSearch);
+                        IsFederalCodes?.Invoke();
                         SearchFederalCodes(node);
                         break;
                     }
@@ -176,10 +176,20 @@ namespace Classifier
             simpleDescription = simpleDescription.Replace("(", "[(]");
             simpleDescription = simpleDescription.Replace(")", "[)]");
             simpleDescription = simpleDescription.Replace(".", "[.]");
-            var pattern = "^" + simpleDescription + "$";
+            var pattern = @"^[-.\s\d]*" + simpleDescription + "$";
             return Regex.Match(input, pattern, RegexOptions.IgnoreCase).Value;
         }
         #endregion
+
+        public string BullshitCleaner(string input)
+        {
+            var pattern = @"участки размещения административно-деловых объектов:|
+                                участки размещения жилищно-коммунальных объектов:|
+                                        участки размещения торгово-бытовых объектов:|
+                                    участки размещения спортивно-рекреационных объектов:|
+                                        участки размещения многоквартирных жилых домов:";
+            return Regex.Replace(input, pattern, " ",RegexOptions.IgnoreCase);
+        }
 
         /// <summary>
         /// Добавление нового совпадения в строку Matches
@@ -187,11 +197,13 @@ namespace Classifier
         /// <param name="match"></param>
         internal void AddMatches(string match)
         {
+            match = match.Replace(@"\", "");
+            match = match.Replace(@"""", "");
             if (!match.Equals(""))
                 if (_matches.Length == 0)
                     _matches.Append(match);
                 else
-                    _matches.Append(", " + match);
+                    _matches.Append("\n" + match);
         }
 
         /// <summary>
