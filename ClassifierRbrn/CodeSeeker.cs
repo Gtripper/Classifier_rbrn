@@ -19,9 +19,7 @@ namespace Classifier
         bool IsPZZSearch { get; }
         bool IsMainSearch { get; }
 
-        event Action<bool, string> SendFederalCode;
-        event Func<bool> IsFederalCodes;
-        event Action FederalCodes;
+        event Action FederalCodesDetected;
     }
 
 
@@ -51,10 +49,7 @@ namespace Classifier
         public bool IsMainSearch { get; private set; }
 
         #region event
-        public event Action<bool, string> SendFederalCode;
-        public event Func<bool> IsFederalCodes;
-
-        public event Action FederalCodes;
+        public event Action FederalCodesDetected;
         #endregion
 
         public CodeSeeker(string Input, ICodes codes, INodesCollection mf)
@@ -87,7 +82,6 @@ namespace Classifier
                         IsFederalSearch = true;
                         IsPZZSearch = false;
                         IsMainSearch = false;
-                        IsFederalCodes?.Invoke();
                         SearchFederalCodes(node);
                         break;
                     }
@@ -164,8 +158,7 @@ namespace Classifier
 
                 if (reg.IsMatch(input))
                 {
-                    SendFederalCode?.Invoke(IsFederalSearch, val);
-                    FederalCodes?.Invoke();
+                    FederalCodesDetected?.Invoke();
                     Codes.AddNodes(val);
                     match = reg.Match(input).Value;
                     AddMatches(match);
