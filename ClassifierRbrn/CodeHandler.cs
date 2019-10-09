@@ -69,6 +69,8 @@ namespace Classifier
             isFederal = true;
         }
 
+        
+
         #region Behavior
         /// <summary>
         /// Удаляет базовые коды при наличии уточняющих
@@ -379,12 +381,7 @@ namespace Classifier
         }
 
         #region FederalCodesBehavior
-        private void FederalBehavior()
-        {
-            //FederalToFewPZZCodesFix();
-            CommunalFix();
-        }
-
+        
         /// <summary>
         /// Осуществляет выбор конкретного кода ПЗЗ в федеральных кодах
         /// </summary>
@@ -432,9 +429,15 @@ namespace Classifier
         #endregion
 
         #endregion
-        public void FullProcessing()
+
+
+        private void FederalBehavior()
         {
-            FederalBehavior();
+            CommunalFix();
+        }
+
+        private void NonFederalBehavior()
+        {
             RemoveBaseCodes();
             NumberDeterminant();
             FixCode_Other();
@@ -446,6 +449,21 @@ namespace Classifier
             SpeciallyProtectedAreaFix();
             SomeCodesFix();
             LandscapingFix();
+        }
+
+
+        public void FullProcessing()
+        {
+            if (Codes.Count == 0)
+                return;
+            if (isFederal)
+            {
+                FederalBehavior();
+            }
+            else
+            {
+                NonFederalBehavior();                
+            }
         }
     }
 }
