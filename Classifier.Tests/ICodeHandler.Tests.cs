@@ -70,7 +70,7 @@ namespace Classifier.Tests
         {
             ICodes codes = new Codes(mf);
             IBTI buiding = new BTI(btiCodes, false, false, true);
-            ISearchCodes searchResult = new SearchCodes(input, codes, mf);
+            ICodeSeeker searchResult = new CodeSeeker(input, codes, mf);
             ICodeHandler processing = new CodeHandler(searchResult.Codes, buiding, input, 0, mf);
 
             var result = processing.Maintenance;
@@ -83,7 +83,7 @@ namespace Classifier.Tests
         {
             ICodes codes = new Codes(mf);
             IBTI buiding = new BTI(btiCodes, false, false, true);
-            ISearchCodes searchResult = new SearchCodes(input, codes, mf);
+            ICodeSeeker searchResult = new CodeSeeker(input, codes, mf);
             ICodeHandler processing = new CodeHandler(searchResult.Codes, buiding, input, 0, mf);
 
             var result = processing.Maintenance;
@@ -135,8 +135,8 @@ namespace Classifier.Tests
         {
             IBTI bti = new BTI();
             string input = "Благоустройство территории";
-            ISearchCodes searchCodes = new SearchCodes(input, new Codes(mf), mf);
-            searchCodes.MainLoop();
+            ICodeSeeker searchCodes = new CodeSeeker(input, new Codes(mf), mf);
+            searchCodes.Seek();
             ICodeHandler processing = new CodeHandler(searchCodes.Codes, bti, input, 0, mf);
 
             processing.FullProcessing();
@@ -150,8 +150,8 @@ namespace Classifier.Tests
         {
             IBTI bti = new BTI();
             string input = "Благоустройство территории и гараж";
-            ISearchCodes searchCodes = new SearchCodes(input, new Codes(mf), mf);
-            searchCodes.MainLoop();
+            ICodeSeeker searchCodes = new CodeSeeker(input, new Codes(mf), mf);
+            searchCodes.Seek();
             CodeHandler processing = new CodeHandler(searchCodes.Codes, bti, input, 0, mf);
 
             processing.FullProcessing();

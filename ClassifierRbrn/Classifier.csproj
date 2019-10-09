@@ -58,7 +58,7 @@
     <Compile Include="Nodes\NodesCollection.cs" />
     <Compile Include="OutputData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchCodes.cs" />
+    <Compile Include="CodeSeeker.cs" />
     <Compile Include="TypeAndKind.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

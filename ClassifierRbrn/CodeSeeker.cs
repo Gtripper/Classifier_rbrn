@@ -9,9 +9,9 @@ using Classifier.Nodes;
 
 namespace Classifier
 {
-    public interface ISearchCodes
+    public interface ICodeSeeker
     {
-        void MainLoop();
+        void Seek();
 
         string Matches { get; }
         ICodes Codes { get; }
@@ -37,7 +37,7 @@ namespace Classifier
     /// 2.2 В случае успешной проверки - остановка цикла поиска
     /// 3. Поиск совпадений с регулярными выражениями regexpPatterns
     /// </remark>
-    public class SearchCodes : ISearchCodes
+    public class CodeSeeker : ICodeSeeker
     {
         private readonly string input; // ВРИ по документу
         private StringBuilder _matches;
@@ -54,7 +54,7 @@ namespace Classifier
         public event Func<bool> IsFederalCodes;
         #endregion
 
-        public SearchCodes(string Input, ICodes codes, INodesCollection mf)
+        public CodeSeeker(string Input, ICodes codes, INodesCollection mf)
         {
             input = BullshitCleaner(Input);
             _matches = new StringBuilder("");
@@ -66,7 +66,7 @@ namespace Classifier
             IsMainSearch = false;
         }
 
-        public void MainLoop()
+        public void Seek()
         {
             var nodes = mf.Nodes;
             var match = "";

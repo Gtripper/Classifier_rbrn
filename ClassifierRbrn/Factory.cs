@@ -18,7 +18,7 @@ namespace Classifier
         INodesCollection mf = new NodesCollection();
         IInputData data;
         ICodes Codes { get; set; }
-        ISearchCodes SearchingResult { get; set; }
+        ICodeSeeker SearchingResult { get; set; }
         ICodeHandler processing { get; set; }
         ITypeAndKind Types { get; set; }
         IBTI Bti { get; set; }
@@ -35,9 +35,9 @@ namespace Classifier
             return new BTI(data.BtiVri, data.Lo_lvl, data.Mid_lvl, data.Hi_lvl);
         }
 
-        private ISearchCodes CreateISearch()
+        private ICodeSeeker CreateISearch()
         {
-            return new SearchCodes(data.Vri_doc, Codes, mf);
+            return new CodeSeeker(data.Vri_doc, Codes, mf);
         }
 
         private ICodeHandler CreateProcessing()
@@ -68,7 +68,7 @@ namespace Classifier
             processing.Cutter += Types.CutterDelegate;
             SearchingResult.SendFederalCode += processing.IsFederal;
 
-            SearchingResult.MainLoop();
+            SearchingResult.Seek();
             processing.FullProcessing();
 
             if (IsNoResult())
