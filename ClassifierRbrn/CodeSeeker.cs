@@ -21,6 +21,7 @@ namespace Classifier
 
         event Action<bool, string> SendFederalCode;
         event Func<bool> IsFederalCodes;
+        event Action FederalCodes;
     }
 
 
@@ -52,6 +53,8 @@ namespace Classifier
         #region event
         public event Action<bool, string> SendFederalCode;
         public event Func<bool> IsFederalCodes;
+
+        public event Action FederalCodes;
         #endregion
 
         public CodeSeeker(string Input, ICodes codes, INodesCollection mf)
@@ -162,6 +165,7 @@ namespace Classifier
                 if (reg.IsMatch(input))
                 {
                     SendFederalCode?.Invoke(IsFederalSearch, val);
+                    FederalCodes?.Invoke();
                     Codes.AddNodes(val);
                     match = reg.Match(input).Value;
                     AddMatches(match);

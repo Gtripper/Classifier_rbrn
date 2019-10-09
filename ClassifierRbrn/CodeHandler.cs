@@ -16,6 +16,7 @@ namespace Classifier
         
         event Action<string> Cutter;
         void IsFederal(bool state, string msg);
+        void IsFederal_EventHandler();
     }
 
     /// <summary>
@@ -62,6 +63,12 @@ namespace Classifier
             node = new List<string>();
             this.mf = mf;
         }
+
+        public void IsFederal_EventHandler()
+        {
+            isFederal = true;
+        }
+
         #region Behavior
         /// <summary>
         /// Удаляет базовые коды при наличии уточняющих
