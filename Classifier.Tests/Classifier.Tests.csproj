@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.2.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.9.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,12 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClassifierRbrn\Classifier.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="DBLayer">
-      <HintPath>..\..\DBLayer\DBLayer\obj\Debug\DBLayer.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

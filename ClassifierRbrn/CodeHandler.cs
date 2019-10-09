@@ -69,9 +69,8 @@ namespace Classifier
             isFederal = true;
         }
 
-        
-
         #region Behavior
+        #region NonResidentionalBehavior
         /// <summary>
         /// Удаляет базовые коды при наличии уточняющих
         /// </summary>
@@ -215,7 +214,7 @@ namespace Classifier
             {
                 Codes.RemoveAll("12.3");
             }
-            else if (IsOtherExist && Codes.Count == 1 && bti.Codes.Count > 0)
+            else if (Codes.Nodes[0].Code == "12.3" && bti.Codes.Count > 0)
             {
                 Codes.RemoveAll("12.3");
                 Codes.AddNodes(bti.Codes.Nodes);
@@ -261,7 +260,7 @@ namespace Classifier
         /// </summary>
         private void Type230Fix()
         {
-            var isKindCode3004Exist = Codes.Exists("2.7, 2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.91");
+            var isKindCode3004Exist = Codes.Exists("2.7, 2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.9.1");
 
             if (IsHousingCodes() && isKindCode3004Exist)
             {
@@ -275,7 +274,8 @@ namespace Classifier
         private void Type130Fix()
         {
             var isKindCode3004Exist = Codes.Exists("2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.91");
-            var isType100 = Codes.Nodes.Exists(p => p.Type.Equals("100") && !p.Code.Equals("3.1.2"));
+            var isType100 = Codes.Nodes.Exists(p => p.Type.Equals("100", StringComparison.InvariantCulture) 
+                                                && !p.Code.Equals("3.1.2", StringComparison.InvariantCulture));
 
             if (isType100 && isKindCode3004Exist)
             {
@@ -366,6 +366,7 @@ namespace Classifier
         {
             return Codes.Exists("2.0, 2.1, 2.2, 2.3, 2.1.1, 2.5, 2.6");
         }
+        #endregion
 
         private void SomeCodesCut(string codes, string types)
         {
@@ -399,35 +400,19 @@ namespace Classifier
             SomeCodesCut("7.3, 7.6", "300", () => { return Codes.ExistsKind("3005"); });
         }
 
-        #region FederalCodesBehavior
+        #region FederalCodesBehavior        
         
-        /// <summary>
-        /// Осуществляет выбор конкретного кода ПЗЗ в федеральных кодах
-        /// </summary>
-        //private void FederalToFewPZZCodesFix()
-        //{
-        //    var map = new CodesMapping().Map.Where(p => p.Value.Count > 1)
-        //        .Select(p => p.Value).Where(p => p.Intersect(Codes.Nodes.Select(v => v.vri)).Count() > 0);
-
-        //    if (map.Count() > 0)
-        //    {
-        //        var list = map.ElementAt(0);
-
-        //        bool bl = Codes.Exists(bti.Codes.Show) &&
-        //            bti.Codes.Exists(list);
-
-        //        if (bl)
-        //        {
-        //            Codes.Nodes.RemoveAll(p => !bti.Codes.Exists(p.vri) && list.Contains(p.vri));
-        //            uncut = false;
-        //        }
-        //    }       
-        //}
 
         private void CommunalFix()
         {
             if (node.Exists(p => Equals(p, "3.1")) && uncut)
                 CutterFix("3.1.2, 3.1.3");
+        }
+
+        private void FederalType230Fix()
+        {
+            var codes3004 = "2.7, 2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.9.1";
+            SomeCodesCut(codes3004, "200");
         }
 
         private void CutterFix(string except)
@@ -453,6 +438,7 @@ namespace Classifier
         private void FederalBehavior()
         {
             CommunalFix();
+            FederalType230Fix();
         }
 
         private void NonFederalBehavior()

@@ -13,7 +13,7 @@ namespace Classifier.Tests
     {
         INodesCollection mf = new NodesCollection();
 
-        public ICodeHandler Processing(string vri, string input)
+        public ICodeHandler Handler(string vri, string input)
         {
             ICodes codes = new Codes(mf);
             codes.AddNodes(vri);
@@ -21,7 +21,7 @@ namespace Classifier.Tests
             return new CodeHandler(codes, new BTI(), input, 0, mf);
         }
 
-        public ICodeHandler Processing(string vri, IBTI bti, string input)
+        public ICodeHandler Handler(string vri, IBTI bti, string input)
         {
             ICodes codes = new Codes(mf);
             codes.AddNodes(vri);
@@ -42,7 +42,7 @@ namespace Classifier.Tests
         [TestCase("3.5, 3.5.2", "3.5.2")]
         public void RemoveBaseCodes_Intersect_correctWork(string Codes, string _excepted)
         {
-            var processing = Processing(Codes, "");
+            var processing = Handler(Codes, "");
             var excepted = exceptedCodes(_excepted);
 
             processing.FullProcessing();
@@ -57,7 +57,7 @@ namespace Classifier.Tests
         public void ResidentionalCodesIdentifier_BTI_HiLvlIsTrue_ReturnsCorrectResult(string Codes, string _excepted)
         {            
             IBTI bti = new BTI("2.5, 2.6, 2.7.1" , false, false, true);
-            var processing = Processing(Codes, bti, "");
+            var processing = Handler(Codes, bti, "");
             var excepted = exceptedCodes(_excepted);
 
             processing.FullProcessing();
@@ -69,7 +69,7 @@ namespace Classifier.Tests
         public void ResidentionalCodesIdentifier_BaseResidentionaCode_BTICodesContainsResidentionalCodes()
         {
             IBTI bti = new BTI("2.1, 2.2", false, false, false);
-            var processing = Processing("2.0", bti, "");
+            var processing = Handler("2.0", bti, "");
             var excepted = exceptedCodes("2.1, 2.2");
 
             processing.FullProcessing();
@@ -135,7 +135,7 @@ namespace Classifier.Tests
         public void FixCode_Other_SingleOtherCodeBtiCodesIsEmpty_DoNothing()
         {
             var result = exceptedCodes("12.3.0");
-            var processing = Processing("12.3.0", "");
+            var processing = Handler("12.3.0", "");
 
             processing.FullProcessing();
 
@@ -175,7 +175,7 @@ namespace Classifier.Tests
         [Test]
         public void Type230Fix_3004Exist_RemoveCodes3004()
         { 
-            var processing = Processing("2.0, 2.7, 3.1.1, 2.7.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1", "");
+            var processing = Handler("2.0, 2.7, 3.1.1, 2.7.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1", "");
             var result = exceptedCodes("2.0");
 
             processing.FullProcessing();
@@ -186,7 +186,7 @@ namespace Classifier.Tests
         [Test]
         public void Type230Fix_3004IsNotExist_DoNothing()
         {
-            var processing = Processing("2.0.0", "");
+            var processing = Handler("2.0.0", "");
             var result = exceptedCodes("2.0.0");
 
             processing.FullProcessing();
@@ -197,7 +197,7 @@ namespace Classifier.Tests
         [Test]
         public void Type230Fix_HousingCodesIsNotExist_DoNothing()
         {
-            var processing = Processing("3.1.1, 2.7.1.0, 4.9.0, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4", "");
+            var processing = Handler("3.1.1, 2.7.1.0, 4.9.0, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4", "");
             var result = exceptedCodes("3.1.1, 2.7.1.0, 4.9.0, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4");
 
             processing.FullProcessing();
@@ -210,7 +210,7 @@ namespace Classifier.Tests
         [TestCase("4.1, 3.6.1, 12.0.2", "4.1, 3.6.1, 12.0.2", "")]
         public void LanscapingFix_MoreThenOneIndexes_Delete12_0_1(string vri, string excepted, string input)
         {
-            var processing = Processing(vri, input);
+            var processing = Handler(vri, input);
             var result = exceptedCodes(excepted);
 
             processing.FullProcessing();
@@ -222,7 +222,7 @@ namespace Classifier.Tests
         [TestCase("3.1.1", "3.1.1", "благоустройство")]
         public void LandscapingFix_RandomvSoloIndex_DoNothing(string vri, string excepted, string input)
         {
-            var processing = Processing(vri, input);
+            var processing = Handler(vri, input);
             var result = exceptedCodes(excepted);
 
             processing.FullProcessing();
@@ -237,7 +237,7 @@ namespace Classifier.Tests
         public void HousingAndRecreationFix_DeleteRecreationIndex(string vriCodes, string excepted, string input)
         {
             var result = exceptedCodes(excepted);
-            var processing = Processing(vriCodes, input);
+            var processing = Handler(vriCodes, input);
 
             processing.FullProcessing();
 
@@ -278,7 +278,7 @@ namespace Classifier.Tests
         [TestCase("9.0.0", "земельные участки, занятые особо охраняемыми территориями и объектами, городскими лесами", "9.0.0")]
         public void SpeciallyProtectedAreasFix_SingleCode_DoNothing(string vri, string input, string excepted)
         {
-            var processing = Processing(vri, input);
+            var processing = Handler(vri, input);
             var result = exceptedCodes(excepted);
 
             processing.FullProcessing();
@@ -291,12 +291,63 @@ namespace Classifier.Tests
         [TestCase("4.1.0, 9.0.0", "", "4.1.0, 9.0.0")]
         public void SpeciallyProtectedAreasFix_FewCodes_DoNothing(string vri, string input, string excepted)
         {
-            var processing = Processing(vri, input);
+            var processing = Handler(vri, input);
             var result = exceptedCodes(excepted);
 
             processing.FullProcessing();
 
             Assert.AreEqual(result, processing.Codes.Show);
         }
+
+        #region Test Federal Behavior
+
+        #region FederalType230Fix
+        [Test]
+        public void FederalType230Fix_Type300FromList_ReturnsType200()
+        {
+            ICodes codes = new Codes(mf);
+            codes.AddNodes("2.5, 4.9");
+            var handler = new CodeHandler(codes, new BTI(), "", 0, mf);
+            var types = new TypeAndKind(codes);
+            handler.Cutter += types.CutterDelegate;
+            handler.IsFederalEventHandler();
+
+            handler.FullProcessing();
+
+            Assert.AreEqual(200, types.Type);
+        }
+
+        [Test]
+        public void FederalType230Fix_Type300FromListAndAnotherType300_ReturnsType230()
+        {
+            ICodes codes = new Codes(mf);
+            codes.AddNodes("2.5, 4.9, 6.4");
+            var handler = new CodeHandler(codes, new BTI(), "", 0, mf);
+            var types = new TypeAndKind(codes);
+            handler.Cutter += types.CutterDelegate;
+            handler.IsFederalEventHandler();
+
+            handler.FullProcessing();
+
+            Assert.AreEqual(230, types.Type);
+        }
+
+        [Test]
+        public void FederalType230Fix_Type300NotFromAList_ReturnsType230()
+        {
+            ICodes codes = new Codes(mf);
+            codes.AddNodes("2.5, 6.4");
+            var handler = new CodeHandler(codes, new BTI(), "", 0, mf);
+            var types = new TypeAndKind(codes);
+            handler.Cutter += types.CutterDelegate;
+            handler.IsFederalEventHandler();
+
+            handler.FullProcessing();
+
+            Assert.AreEqual(230, types.Type);
+        }
+        #endregion
+
+        #endregion
     }
 }
