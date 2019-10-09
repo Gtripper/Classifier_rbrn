@@ -5,9 +5,9 @@ namespace Classifier
     public interface IBTI
     {
         ICodes Codes { get; }
-        bool Lo_lvl { get; }
-        bool Mid_lvl { get; }
-        bool Hi_lvl { get; }
+        bool LoLvl { get; }
+        bool MidLvl { get; }
+        bool HiLvl { get; }
     }
 
     /// <summary>
@@ -19,16 +19,16 @@ namespace Classifier
         public INodesCollection mf = new NodesCollection();
 
         public ICodes Codes { get; }
-        public bool Lo_lvl { get; }
-        public bool Mid_lvl { get; }
-        public bool Hi_lvl { get; }
+        public bool LoLvl { get; }
+        public bool MidLvl { get; }
+        public bool HiLvl { get; }
 
         public BTI()
         {
             Codes = new Codes(mf);
-            Lo_lvl = false;
-            Mid_lvl = false;
-            Hi_lvl = false;
+            LoLvl = false;
+            MidLvl = false;
+            HiLvl = false;
         }
         /// <summary>
         /// Конструктор объекта БТИ
@@ -41,9 +41,9 @@ namespace Classifier
         {
             Codes = new Codes(mf);
             Codes.AddNodes(_codes);
-            Lo_lvl = _lo;
-            Mid_lvl = _mid;
-            Hi_lvl = _hi;
+            LoLvl = _lo;
+            MidLvl = _mid;
+            HiLvl = _hi;
         }
     }
 }

@@ -51,14 +51,26 @@ namespace Classifier.Tests
         }
 
 
-        [TestCase("2.1.1.0, 2.5.0, 2.6.0", "2.6.0")]
-        [TestCase("2.0.0, 2.1.1.0", "2.6.0")]
-        [TestCase("2.0.0, 2.1.1.0, 2.5.0, 2.6.0, 4.4.0", "2.6.0, 4.4.0")]
-        public void NumberDeterminant_BTI_HiLvlIsTrue_ReturnsCorrectResult(string Codes, string _excepted)
+        [TestCase("2.1.1, 2.5, 2.6", "2.6")]
+        [TestCase("2.0, 2.1.1", "2.6")]
+        [TestCase("2.0, 2.1.1, 2.5, 2.6, 4.4", "2.6, 4.4")]
+        public void ResidentionalCodesIdentifier_BTI_HiLvlIsTrue_ReturnsCorrectResult(string Codes, string _excepted)
         {            
-            IBTI bti = new BTI("2.5.0, 2.6.0, 2.7.1.0" , false, false, true);
+            IBTI bti = new BTI("2.5, 2.6, 2.7.1" , false, false, true);
             var processing = Processing(Codes, bti, "");
             var excepted = exceptedCodes(_excepted);
+
+            processing.FullProcessing();
+
+            Assert.AreEqual(excepted, processing.Codes.Show);
+        }
+
+        [Test]
+        public void ResidentionalCodesIdentifier_BaseResidentionaCode_BTICodesContainsResidentionalCodes()
+        {
+            IBTI bti = new BTI("2.1, 2.2", false, false, false);
+            var processing = Processing("2.0", bti, "");
+            var excepted = exceptedCodes("2.1, 2.2");
 
             processing.FullProcessing();
 
@@ -218,31 +230,7 @@ namespace Classifier.Tests
             Assert.AreEqual(result, processing.Codes.Show);
         }
 
-        //[TestCase("3.1.1, 3.1.2, 3.1.3", "3.1.1", "3.1.1")]
-        //[TestCase("3.1.1, 3.1.2, 3.1.3", "3.1.1, 3.1.2", "3.1.1, 3.1.2")]
-        //[TestCase("3.1.1, 3.1.2, 3.1.3", "3.1.2", "3.1.2")]
-        //[TestCase("3.1.1, 3.1.2, 3.1.3", "4.1.0", "3.1.1, 3.1.2, 3.1.3")]
-        //[TestCase("3.1.1, 3.1.2, 3.1.3", "", "3.1.1, 3.1.2, 3.1.3")]
-        //[TestCase("3.1.1, 3.1.2, 3.1.3", "", "3.1.1, 3.1.2, 3.1.3")]
-        //[TestCase("3.5.1.0, 3.5.2.0", "3.5.1.0", "3.5.1.0")]
-        //[TestCase("3.5.1.0, 3.5.2.0", "", "3.5.1.0, 3.5.2.0")]
-        //[TestCase("3.5.1.0, 3.5.2.0", "3.3.0", "3.5.1.0, 3.5.2.0")]
-        //[TestCase("2.7.0", "", "2.7.0")]
-        //[TestCase("2.7.0", "3.3.0", "2.7.0")]
-        //[TestCase("7.2.1", "6.7.0, 7.1.2", "7.2.1")]
-        //[Ignore("miss method")]
-        public void FederalToFewPZZCodesFix_ChooseCorrectIndexAndDeleteOther(string vriCodes, string btiCodes, string excepted)
-        {
-            ICodes codes = new Codes(mf);
-            codes.AddNodes(vriCodes);
-            var result = exceptedCodes(excepted);
-            IBTI bti = new BTI(btiCodes, false, false, false);
-            ICodeHandler processing = new CodeHandler(codes, bti, "", 0, mf);
-
-            processing.FullProcessing();
-
-            Assert.AreEqual(result, processing.Codes.Show);
-        }
+        
 
         [TestCase("2.1.1.0, 5.0.1", "2.1.1.0", "рекреац")]
         [TestCase("2.1.1.0, 5.0.1", "2.1.1.0, 5.0.1", "")]

@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.9.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Include="NSubstitute" Version="4.2.0" />
     <PackageReference Include="NUnit" Version="3.12.0" />
@@ -13,6 +22,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClassifierRbrn\Classifier.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DBLayer">
+      <HintPath>..\..\DBLayer\DBLayer\obj\Debug\DBLayer.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -1,93 +1,95 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace Classifier
 {
     public interface IInputData
     {
-        string Vri_doc { get; }
+        string VriDoc { get; }
         int Area { get; }
 
         string BtiVri { get; }
-        bool Lo_lvl { get; }
-        bool Mid_lvl { get; }
-        bool Hi_lvl { get; }
+        bool LoLvl { get; }
+        bool MidLvl { get; }
+        bool HiLvl { get; }
 
-        string VRI_KLASSI { get; }
+        string VriKlass { get; }
     }
 
 
     public class InputData : IInputData
     {
-        public string Vri_doc { get; }
+        public string VriDoc { get; }
         public int Area { get; }
 
         public string BtiVri { get; }
-        public bool Lo_lvl { get; }
-        public bool Mid_lvl { get; }
-        public bool Hi_lvl { get; }
+        public bool LoLvl { get; }
+        public bool MidLvl { get; }
+        public bool HiLvl { get; }
 
-        public string VRI_KLASSI { get; }
+        public string VriKlass { get; }
 
-        public InputData(string _vri_doc, int _area)
+        public InputData(string vriDoc, int area)
         {
-            Vri_doc = _vri_doc;
-            Area = _area;
+            VriDoc = vriDoc;
+            Area = area;
             BtiVri = "";
-            Lo_lvl = false;
-            Mid_lvl = false;
-            Hi_lvl = false;
-            VRI_KLASSI = "";
+            LoLvl = false;
+            MidLvl = false;
+            HiLvl = false;
+            VriKlass = "";
         }
 
-        public InputData(string _vri_doc, int _area, string _btiVri, bool _lo, bool _mid, bool _hi)
+        public InputData(string vriDoc, int area, string btiVri, bool lo, bool mid, bool hi)
         {
-            Vri_doc = _vri_doc;
-            Area = _area;
-            BtiVri = _btiVri;
-            Lo_lvl = _lo;
-            Mid_lvl = _mid;
-            Hi_lvl = _hi;
-            VRI_KLASSI = "";
+            VriDoc = vriDoc;
+            Area = area;
+            BtiVri = btiVri;
+            LoLvl = lo;
+            MidLvl = mid;
+            HiLvl = hi;
+            VriKlass = "";
         }
 
-        public InputData(string _vri_doc, int _area, string _btiVri, bool _lo, bool _mid, bool _hi, string _vri_kl)
+        public InputData(string vriDoc, int area, string btiVri, bool lo, bool mid, bool hi, string vri_kl)
         {
-            Vri_doc = _vri_doc;
-            Area = _area;
-            BtiVri = _btiVri;
-            Lo_lvl = _lo;
-            Mid_lvl = _mid;
-            Hi_lvl = _hi;
-            VRI_KLASSI = _vri_kl;
+            VriDoc = vriDoc;
+            Area = area;
+            BtiVri = btiVri;
+            LoLvl = lo;
+            MidLvl = mid;
+            HiLvl = hi;
+            VriKlass = vri_kl;
         }
     }
 
     public class InputDataDB : IInputData
     {
-        public string Vri_doc { get; private set; }
+        public string VriDoc { get; private set; }
         public int Area { get; private set; }
 
         public string BtiVri { get; private set; }
-        public bool Lo_lvl { get; private set; }
-        public bool Mid_lvl { get; private set; }
-        public bool Hi_lvl { get; private set; }
+        public bool LoLvl { get; private set; }
+        public bool MidLvl { get; private set; }
+        public bool HiLvl { get; private set; }
 
-        public string VRI_KLASSI { get; }
+        public string VriKlass { get; }
 
         public InputDataDB(DBLayer.Plot plot, int area = 0)
         {
-            Vri_doc = plot.VriDoc;
+            Contract.Requires(plot != null);
+            VriDoc = plot.VriDoc;
             Area = area;
             SetBtiPart(plot);
-            VRI_KLASSI = plot.VriClassfRr;
+            VriKlass = plot.VriClassfRr;
         }
 
         private void SetBtiPart(DBLayer.Plot plot)
         {
             BtiVri = "";
-            Lo_lvl = false;
-            Mid_lvl = false;
-            Hi_lvl = false;
+            LoLvl = false;
+            MidLvl = false;
+            HiLvl = false;
 
             if (plot.Buildings.Count > 0)
             {
@@ -98,18 +100,18 @@ namespace Classifier
                 }
 
                 var houses = plot.Buildings.Where(p => p.BuildingClass.Equals("многоквартирный дом"));
-                if (houses.Count() > 0)
+                if (houses.Any())
                 {
                     var nStoreys = houses.Select(p =>
                         (p.NumberOfStoreys == 0 || p.NumberOfStoreys == null) ? p.MaxStoreysOKS ?? 0 : p.NumberOfStoreys);
                     foreach (var s in nStoreys)
                     {
                         if (s > 0 && s <= 4)
-                            Lo_lvl = true;
+                            LoLvl = true;
                         if (s > 4 && s <= 8)
-                            Mid_lvl = true;
+                            MidLvl = true;
                         if (s > 8)
-                            Hi_lvl = true;
+                            HiLvl = true;
                     }
                 }
             }

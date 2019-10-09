@@ -32,17 +32,17 @@ namespace Classifier
 
         private IBTI CreateBTI()
         {
-            return new BTI(data.BtiVri, data.Lo_lvl, data.Mid_lvl, data.Hi_lvl);
+            return new BTI(data.BtiVri, data.LoLvl, data.MidLvl, data.HiLvl);
         }
 
         private ICodeSeeker CreateISearch()
         {
-            return new CodeSeeker(data.Vri_doc, Codes, mf);
+            return new CodeSeeker(data.VriDoc, Codes, mf);
         }
 
         private ICodeHandler CreateProcessing()
         {
-            return new CodeHandler(Codes, Bti, data.Vri_doc, data.Area, mf);
+            return new CodeHandler(Codes, Bti, data.VriDoc, data.Area, mf);
         }
 
         private ITypeAndKind CreateTypes()
@@ -66,15 +66,15 @@ namespace Classifier
             processing = CreateProcessing();
            
             processing.Cutter += Types.CutterDelegate;
-            SearchingResult.FederalCodesDetected += processing.IsFederal_EventHandler;
+            SearchingResult.FederalCodesDetected += processing.IsFederalEventHandler;
 
             SearchingResult.Seek();
             processing.FullProcessing();
 
             if (IsNoResult())
             {
-                IInputData newData = new InputData(data.VRI_KLASSI, data.Area
-                    , data.BtiVri, data.Lo_lvl, data.Mid_lvl, data.Hi_lvl);
+                IInputData newData = new InputData(data.VriKlass, data.Area
+                    , data.BtiVri, data.LoLvl, data.MidLvl, data.HiLvl);
 
                 IFactory newFactory = new Factory(newData);
                 newFactory.Execute();
@@ -86,7 +86,7 @@ namespace Classifier
 
         private bool IsNoResult()
         {
-            return !string.IsNullOrEmpty(data.VRI_KLASSI) && (Types.Type == 999 || Types.Type == 777 || string.IsNullOrEmpty(data.Vri_doc) || Codes.Show == "12.3");
+            return !string.IsNullOrEmpty(data.VriKlass) && (Types.Type == 999 || Types.Type == 777 || string.IsNullOrEmpty(data.VriDoc) || Codes.Show == "12.3");
         }
     }
 }

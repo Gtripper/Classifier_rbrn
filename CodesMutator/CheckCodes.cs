@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,7 +14,8 @@ namespace CodesMutator
     {
         public static int CheckTypesIsConfirmityCodes(string vri, int type, int kind, 
             ref Dictionary<(int, int), int> dict, NodesCollection mf)
-        {       
+        {
+            Contract.Requires(dict != null);
 
             Codes codes = new Codes(mf);
             codes.AddNodes(vri);

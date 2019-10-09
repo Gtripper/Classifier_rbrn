@@ -106,7 +106,7 @@ namespace Classifier
                         IsFederalSearch = false;
                         IsPZZSearch = false;
                         IsMainSearch = true;
-                    }                  
+                    }
                 }
             }
         }
@@ -123,7 +123,7 @@ namespace Classifier
         /// Строка afterReplace необходима для того, что бы разделяющие "." в 
         /// федеральных кодах не считались любым символом
         /// </remark>
-        private Regex FederalSearchRegexp(string fCode)
+        private static Regex FederalSearchRegexp(string fCode)
         {
             var afterReplace = Regex.Replace(fCode, @"[.]", @"\s*[.]\s*", RegexOptions.IgnoreCase);
 
@@ -178,14 +178,14 @@ namespace Classifier
         }
         #endregion
 
-        public string BullshitCleaner(string input)
+        public static string BullshitCleaner(string input)
         {
             var pattern = @"участки размещения административно-деловых объектов:|
                                 участки размещения жилищно-коммунальных объектов:|
                                         участки размещения торгово-бытовых объектов:|
                                     участки размещения спортивно-рекреационных объектов:|
                                         участки размещения многоквартирных жилых домов:";
-            return Regex.Replace(input, pattern, " ",RegexOptions.IgnoreCase);
+            return Regex.Replace(input, pattern, " ", RegexOptions.IgnoreCase);
         }
 
         /// <summary>
@@ -196,11 +196,10 @@ namespace Classifier
         {
             match = match.Replace(@"\", "");
             match = match.Replace(@"""", "");
-            if (!match.Equals(""))
-                if (_matches.Length == 0)
-                    _matches.Append(match);
-                else
-                    _matches.Append("\n" + match);
+            if (_matches.Length == 0)
+                _matches.Append(match);
+            else
+                _matches.Append("\n" + match);
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Classifier
         
         event Action<string> Cutter;
         void IsFederal(bool state, string msg);
-        void IsFederal_EventHandler();
+        void IsFederalEventHandler();
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ namespace Classifier
             this.mf = mf;
         }
 
-        public void IsFederal_EventHandler()
+        public void IsFederalEventHandler()
         {
             isFederal = true;
         }
@@ -119,13 +119,13 @@ namespace Classifier
             // Коллекция базовых кодов, присутствующая в Codes
             var intersect = baseCodes.Keys.ToList().Intersect(listOfVri);
 
-            if (intersect.Count() > 0)
+            if (intersect.Any())
             {
                 foreach (var val in intersect)
                 {
                     // Пересечение производных от базовых кодов
                     // и Codes
-                    if (baseCodes[val].Intersect(listOfVri).Count() > 0)
+                    if (baseCodes[val].Intersect(listOfVri).Any())
                     {
                         Codes.RemoveAll(val);
                     }
@@ -144,26 +144,43 @@ namespace Classifier
         /// </remark>
         /// TODO: Посмотреть на реальных участках, где в ВРИ указано
         /// малоэтажные многоквартирные дома
-        private void NumberDeterminant()
+        private void ResidentionalCodesIdentifier()
         {
             var list = new List<string> { "2.1.1", "2.5", "2.6" };
-            bool IsApartmentOrBaseHouse = Codes.Exists(list);
+            bool isApartment = Codes.Exists(list);
 
-            if (IsApartmentOrBaseHouse && bti.Lo_lvl)
+            // Наличие хотя бы одного их свойств БТИ свиедетельствует
+            // о том, что в БТИ это является многоквартирным домом
+            if (isApartment && (bti.LoLvl || bti.MidLvl || bti.HiLvl))
             {
+                // Удаление всех индексов многоквартирных домов
                 Codes.RemoveAll(list);
-                Codes.AddNodes("2.1.1");
+                
+                // Добавление нужных индексов
+                if (bti.LoLvl)                                    
+                    Codes.AddNodes("2.1.1");                
+                if (bti.MidLvl) 
+                    Codes.AddNodes("2.5");                
+                if (bti.HiLvl)
+                    Codes.AddNodes("2.6");
             }
-            if (IsApartmentOrBaseHouse && bti.Mid_lvl)
+
+            bool isBaseHouseCode = Codes.Exists("2.0");
+            var housingCodesInBti = bti.Codes.Exists("2.1, 2.1.1, 2.2, 2.3, 2.5, 2.6");
+
+            // В случае наличия кода 2.0 выполняется проверка уточнения
+            // данных из БТИ
+            if (isBaseHouseCode && housingCodesInBti)
             {
-                Codes.RemoveAll(list);
-                Codes.AddNodes("2.5");
+                Codes.RemoveAll("2.0");
+                Codes.AddNodes(bti.Codes.Nodes.Where(p => p.Code == "2.1"
+                                        || p.Code == "2.1.1"
+                                        || p.Code == "2.2"
+                                        || p.Code == "2.3"
+                                        || p.Code == "2.5"
+                                        || p.Code == "2.2"));
             }
-            if (IsApartmentOrBaseHouse && bti.Hi_lvl)
-            {
-                Codes.RemoveAll(list);
-                Codes.AddNodes("2.6");
-            }
+
             Codes.Sort();
         }
 
@@ -317,7 +334,9 @@ namespace Classifier
             var isCodesNeedToDelete = Codes.Exists("9.0") &&
                 Regex.IsMatch(input, @"\bособ\w*\s*охран\w*\s*(природ\w*\s*)?терр\w*\b", RegexOptions.IgnoreCase);
 
-            var isBuildingsExist = Codes.Nodes.Exists(p => p.Type.Equals("100") || p.Type.Equals("200") || p.Type.Equals("300"));
+            var isBuildingsExist = Codes.Nodes.Exists(p => p.Type.Equals("100", StringComparison.InvariantCulture) 
+                                                        || p.Type.Equals("200", StringComparison.InvariantCulture) 
+                                                        || p.Type.Equals("300", StringComparison.InvariantCulture));
 
             if (isCodesNeedToDelete && Codes.Count > 1)
                 Codes.RemoveAll("9.0");
@@ -334,7 +353,7 @@ namespace Classifier
         /// </summary>
         /// <param name="Codes"></param>
         /// <returns></returns>
-        private bool IsHousingCodes(ICodes _codes)
+        private static bool IsHousingCodes(ICodes _codes)
         {
             return _codes.Exists("2.0, 2.1, 2.2, 2.3, 2.1.1, 2.5, 2.6");
         }
@@ -439,7 +458,7 @@ namespace Classifier
         private void NonFederalBehavior()
         {
             RemoveBaseCodes();
-            NumberDeterminant();
+            ResidentionalCodesIdentifier();
             FixCode_Other();
             ElectricityStationsWithAreaLessThan300();
             Type230Fix();

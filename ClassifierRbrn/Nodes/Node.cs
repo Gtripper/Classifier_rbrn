@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Classifier.Nodes;
+using System.Diagnostics.Contracts;
 
 namespace Classifier
 {
@@ -18,6 +19,7 @@ namespace Classifier
 
         string GetSearchResult(string input);
         bool Equals(INode node);
+        bool Equals(string node);
     }
 
     /// <summary>
@@ -35,20 +37,20 @@ namespace Classifier
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="_code"></param>
-        /// <param name="_type"></param>
-        /// <param name="_kind"></param>
-        /// <param name="_simpleDescription"></param>
-        /// <param name="_description"></param>
-        /// <param name="_reg"></param>
-        public Node(string _code, string _type, string _kind, string _simpleDescription, string _description, INodeRegExp _reg)
+        /// <param name="code"></param>
+        /// <param name="type"></param>
+        /// <param name="kind"></param>
+        /// <param name="simpleDescription"></param>
+        /// <param name="description"></param>
+        /// <param name="reg"></param>
+        public Node(string code, string type, string kind, string simpleDescription, string description, INodeRegExp reg)
         {
-            Code = _code;
-            Type = _type;
-            Kind = _kind;
-            Description = _description;
-            SimpleDescription = _simpleDescription;
-            regExp = _reg;
+            Code = code;
+            Type = type;
+            Kind = kind;
+            Description = description;
+            SimpleDescription = simpleDescription;
+            regExp = reg;
         }
 
         public string GetSearchResult(string input)
@@ -58,7 +60,13 @@ namespace Classifier
 
         public bool Equals(INode node)
         {
-            return Code.Equals(node.Code);
+            Contract.Requires(node != null);
+            return Code.Equals(node.Code, StringComparison.InvariantCulture);
+        }
+
+        public bool Equals(string node)
+        {
+            return Code.Equals(node, StringComparison.InvariantCulture);
         }
     }
 
