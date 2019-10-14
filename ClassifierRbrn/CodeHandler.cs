@@ -210,14 +210,17 @@ namespace Classifier
         {
             bool IsOtherExist = Codes.Exists("12.3");
 
-            if (IsOtherExist && Codes.Count > 1)
+            if (Codes.Count > 0)
             {
-                Codes.RemoveAll("12.3");
-            }
-            else if (Codes.Nodes[0].Code == "12.3" && bti.Codes.Count > 0)
-            {
-                Codes.RemoveAll("12.3");
-                Codes.AddNodes(bti.Codes.Nodes);
+                if (IsOtherExist && Codes.Count > 1)
+                {
+                    Codes.RemoveAll("12.3");
+                }
+                else if (Codes.Nodes[0].Code == "12.3" && bti.Codes.Count > 0)
+                {
+                    Codes.RemoveAll("12.3");
+                    Codes.AddNodes(bti.Codes.Nodes);
+                }
             }
         }
 
@@ -378,7 +381,6 @@ namespace Classifier
                 CutterFix(codes);
             }
         }
-
         
         private void SomeCodesCut(string codes, string types, Func<bool> foo )
         {
@@ -400,19 +402,36 @@ namespace Classifier
             SomeCodesCut("7.3, 7.6", "300", () => { return Codes.ExistsKind("3005"); });
         }
 
-        #region FederalCodesBehavior        
-        
-
+        #region FederalCodesBehavior 
         private void CommunalFix()
         {
-            if (node.Exists(p => Equals(p, "3.1")) && uncut)
-                CutterFix("3.1.2, 3.1.3");
         }
 
         private void FederalType230Fix()
         {
-            var codes3004 = "2.7, 2.7.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.9.1";
+            var codes3004 = "2.7, 2.7.1, 3.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.9.1";
             SomeCodesCut(codes3004, "200");
+        }
+
+        private void FederalType130Fix()
+        {
+            var isKindCode3004Exist = "2.7.1, 3.1, 3.1.1, 4.9, 4.9.1.1, 4.9.1.2, 4.9.1.3, 4.9.1.4, 6.9, 6.91";
+            SomeCodesCut(isKindCode3004Exist, "100");
+        }
+
+        private void FederalHousingAndRecreationFix()
+        {
+            var pattern = @"\bрекреац\w*\b|\bгородск\w*\s*лес\w*\b";
+            bool isRecreationInText = Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);            
+            SomeCodesCut("5.0", "200", () => isRecreationInText);
+        }
+
+        private void FederalSpeciallyProtectedAreaFix()
+        {
+            SomeCodesCut("9.0", "100, 200, 300");
+            SomeCodesCut("9.1, 9.3", "100, 200, 300, 500, 600, 700, 800", 
+                () => Codes.Nodes.Any(p => !p.Code.Equals("9.1", StringComparison.InvariantCulture) &&
+                                            !p.Code.Equals("9.3", StringComparison.InvariantCulture)));
         }
 
         private void CutterFix(string except)
@@ -439,6 +458,10 @@ namespace Classifier
         {
             CommunalFix();
             FederalType230Fix();
+            FederalType130Fix();
+            FederalHousingAndRecreationFix();
+            FederalSpeciallyProtectedAreaFix();
+            SomeCodesFix();
         }
 
         private void NonFederalBehavior()

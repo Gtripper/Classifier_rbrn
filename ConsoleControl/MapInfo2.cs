@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MapInfoWrap;
 using JsonReader;
+using System.Collections.Concurrent;
+using DBLayer;
 
 namespace ConsoleControl
 {
@@ -90,47 +92,59 @@ namespace ConsoleControl
 
         public void Execute()
         {
-            IEnumerable<PlotsFeatures.Properties> props;
-            using (Plots collection = JsonReader.Plots.GetPlots())
+            var bag = new ConcurrentBag<Plot>();
+            using (var context = new Context())
             {
-                props = collection.Proprties;
-            }
-                Parallel.ForEach(Plots.Rows, (row) =>
+                var plots = context.Plots.ToList();
+
+                foreach (var _plot in plots)
                 {
-                    var rowID = row.RowID - 1;
-                    var data = Read(rowID, props);
+                    _plot.Buildings.ToList();
+                    bag.Add(_plot);
+                }
+            }
+            Parallel.ForEach(Plots.Rows, (row) =>
+            {
+                var rowID = row.RowID - 1;
+                var data = Read(rowID, bag);
+                if (data != null)
+                {
                     var result = Processing(data);
                     Write(result, rowID);
-                });
-            
+                }
+            });
+
         }
 
-        private Classifier.InputData Read(int rowID, IEnumerable<PlotsFeatures.Properties> props)
+        private Classifier.IInputData Read(int rowID, ConcurrentBag<Plot> bag)
         {
             Monitor.Enter(Plots);
             var row = Plots.Rows[rowID];
             string cad_num = row["CAD_NUM"];
-            string vri_doc = "";
-            //if (cad_num.Equals(""))
-            //{
-            vri_doc = row["VRI_DOC"];
-            //}
-            //else
-            //{
-            //    string vri_doc_fromJson = props.FirstOrDefault(p => p.CadNum.Equals(cad_num)).VriDoc;
-            //    vri_doc = vri_doc_fromJson == null ? row["VRI_DOC"] : vri_doc_fromJson;
-            //}
-            string bti_code = "";
-            bool lo = false;
-            bool mid = false;
-            bool hi = false;
+            string vri_doc = row["VRI_DOC"];
+            int area = (int)(row["Площадь"] * 10000);
             Monitor.Exit(Plots);
 
-            var data = new Classifier.InputData(vri_doc, 400, bti_code, lo, mid, hi);
-            return data;
+            if (String.IsNullOrEmpty(cad_num))
+            {
+                return null;
+            }
+            var plot = bag.FirstOrDefault(p => p.CadNum.Equals(cad_num, StringComparison.InvariantCulture));
+            if (plot != null)
+            {
+                return new Classifier.InputDataDB(plot, area);
+            }
+            else
+            {
+                string bti_code = "";
+                bool lo = false;
+                bool mid = false;
+                bool hi = false;
+                return new Classifier.InputData(vri_doc, area, bti_code, lo, mid, hi);
+            }
         }
 
-        private Classifier.IOutputData Processing(Classifier.InputData data)
+        private Classifier.IOutputData Processing(Classifier.IInputData data)
         {
             var factory = new Classifier.Factory(data);
             factory.Execute();
@@ -142,9 +156,9 @@ namespace ConsoleControl
         {
             Monitor.Enter(Plots);
             var row = Plots.Rows[RowID];
-            row["VRI_List"] = data.VRI_List;
-            row["fs_tip"] = data.Type;
-            row["fs_vid"] = data.Kind;
+            row["VRI"] = data.VRI_List;
+            row["Type"] = data.Type;
+            row["Kind"] = data.Kind;
             Monitor.Exit(Plots);
         }
     }

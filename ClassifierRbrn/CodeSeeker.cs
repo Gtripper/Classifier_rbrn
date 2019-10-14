@@ -185,7 +185,7 @@ namespace Classifier
                                         участки размещения торгово-бытовых объектов:|
                                     участки размещения спортивно-рекреационных объектов:|
                                         участки размещения многоквартирных жилых домов:";
-            return Regex.Replace(input, pattern, " ", RegexOptions.IgnoreCase);
+            return String.IsNullOrEmpty(input)? "" : Regex.Replace(input, pattern, " ", RegexOptions.IgnoreCase);
         }
 
         /// <summary>

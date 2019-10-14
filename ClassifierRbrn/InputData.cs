@@ -78,7 +78,7 @@ namespace Classifier
         public InputDataDB(DBLayer.Plot plot, int area = 0)
         {
             Contract.Requires(plot != null);
-            VriDoc = plot.VriDoc;
+            VriDoc = plot.VriDoc ?? "";
             Area = area;
             SetBtiPart(plot);
             VriKlass = plot.VriClassfRr;
@@ -91,12 +91,13 @@ namespace Classifier
             MidLvl = false;
             HiLvl = false;
 
-            if (plot.Buildings.Count > 0)
+            if (plot.Buildings != null && plot.Buildings.Any())
             {
                 var vriCodes = plot.Buildings.Select(p => p.VRI).Distinct();
                 foreach (var vri in vriCodes)
                 {
-                    BtiVri += string.IsNullOrEmpty(BtiVri) ? vri : ", " + vri;
+                    var btiVri = vri ?? "";
+                    BtiVri += string.IsNullOrEmpty(BtiVri) ? btiVri : ", " + btiVri;
                 }
 
                 var houses = plot.Buildings.Where(p => p.BuildingClass.Equals("многоквартирный дом"));

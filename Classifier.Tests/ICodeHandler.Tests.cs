@@ -348,6 +348,53 @@ namespace Classifier.Tests
         }
         #endregion
 
+        [Test]
+        public void FederalSpeciallyProtectedAreaFix_Codes9_0AndOtherTypes_ReturnsOtherTypes()
+        {
+            ICodes codes = new Codes(mf);
+            codes.AddNodes("4.5, 9.0");
+            var handler = new CodeHandler(codes, new BTI(), "", 0, mf);
+            var types = new TypeAndKind(codes);
+            handler.Cutter += types.CutterDelegate;
+            handler.IsFederalEventHandler();
+
+            handler.FullProcessing();
+
+            Assert.AreEqual(100, types.Type);
+            Assert.AreEqual("4.5, 9.0", codes.Show);
+        }
+
+        [Test]
+        public void FederalSpeciallyProtectedAreaFix_Codes9_1AndOtherTypes_ReturnsOtherTypes()
+        {
+            ICodes codes = new Codes(mf);
+            codes.AddNodes("4.5, 9.1");
+            var handler = new CodeHandler(codes, new BTI(), "", 0, mf);
+            var types = new TypeAndKind(codes);
+            handler.Cutter += types.CutterDelegate;
+            handler.IsFederalEventHandler();
+
+            handler.FullProcessing();
+
+            Assert.AreEqual(100, types.Type);
+            Assert.AreEqual("4.5, 9.1", codes.Show);
+        }
+
+        public void FederalSpeciallyProtectedAreaFix_Codes9_1And9_3AndOtherTypes_ReturnsOtherTypes()
+        {
+            ICodes codes = new Codes(mf);
+            codes.AddNodes("4.5, 9.1, 9.3");
+            var handler = new CodeHandler(codes, new BTI(), "", 0, mf);
+            var types = new TypeAndKind(codes);
+            handler.Cutter += types.CutterDelegate;
+            handler.IsFederalEventHandler();
+
+            handler.FullProcessing();
+
+            Assert.AreEqual(100, types.Type);
+            Assert.AreEqual("4.5, 9.1, 9.3", codes.Show);
+        }
+
         #endregion
     }
 }

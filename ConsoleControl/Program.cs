@@ -1,69 +1,23 @@
 ﻿using MapInfoWrap;
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using MapInfo;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using DBLayer;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ConsoleControl
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            MapInfoAppControls map = new MapInfoAppControls(new MapinfoCurrentApp());
-            map.TablesShow();
-            var table = map.GetTable();
-
-            var context = new Context();
-
-            Console.WriteLine("Start reading and precessing...");
-
-            var list = new List<BTI>();
-
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            var cad_num = "";
-            var cad_num_old = "";
-            var unom = 0;
-            Plot plot = null;
-
-            foreach (var row in table.Rows)
-            {
-                if (row.RowID % 1000 == 0)
-                {
-                    Console.WriteLine("Row {0} затрачено времени {1} ", row.RowID, sw.Elapsed.Seconds.ToString());
-                    sw.Restart();
-                }
-
-                cad_num = row["CAD_NUM"];
-                unom = row["UNOM"];
-                var building = context.BTIBuildings.FirstOrDefault(p => p.UNOM == unom);
-
-                if (cad_num != cad_num_old)
-                {
-                    plot = context.Plots.FirstOrDefault(p => p.CadNum == cad_num);
-
-                    if (plot != null && building != null)
-                    {
-                        plot.Buildings.Add(building);
-                    }
-                }
-                else
-                {
-                    if (plot != null && building != null)
-                    {
-                        plot.Buildings.Add(building);
-                    }
-                }
-                cad_num_old = cad_num;
-            }            
-
-            
-            context.SaveChanges();
+            MapInfo2 mapInfo2 = new MapInfo2();
+            mapInfo2.Execute();
         }
 
         private static DateTime? dtConvert(string date)
@@ -72,6 +26,85 @@ namespace ConsoleControl
                 return dt;
             else
                 return null;
+        }
+
+        private void uselessshit()
+        {
+            MapInfoAppControls map = new MapInfoAppControls(new MapinfoCurrentApp());
+            map.TablesShow();
+            var table = map.GetTable();
+
+            var cadNums = new ConcurrentDictionary<(string, double), Classifier.IFactory>();
+
+            Console.WriteLine("Start collecting cad_nums");
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            foreach (var row in table.Rows)
+            {
+                if (row.RowID % 10000 == 0)
+                {
+                    Console.WriteLine("{0} Elapsed time => {1}", row.RowID, sw.Elapsed.Seconds);
+                    sw.Restart();
+                }
+
+                string cadNum = row["CAD_NUM"];
+                double area = row["Площадь"] * 10000;
+                if (cadNum.Length > 10)
+                    cadNums.TryAdd((cadNum, area), null);
+            }
+
+            Console.WriteLine("Start processing cad_nums");
+            sw.Restart();
+
+            var bag = new ConcurrentBag<Plot>();
+            using (var context = new Context())
+            {
+                var plots = context.Plots.ToList();
+
+                foreach (var _plot in plots)
+                {
+                    _plot.Buildings.ToList();
+                    bag.Add(_plot);
+                }
+            }
+
+            Parallel.ForEach(cadNums, (item) =>
+            {
+                var plot = bag.FirstOrDefault(p => p.CadNum.Equals(item.Key.Item1, StringComparison.InvariantCulture));
+
+                if (plot != null)
+                {
+                    var data = new Classifier.InputDataDB(plot, (int)item.Key.Item2);
+                    var factory = new Classifier.Factory(data);
+                    factory.Execute();
+                    cadNums[item.Key] = factory;
+                }
+            });
+
+            Console.WriteLine("Start writing data");
+
+            foreach (var row in table.Rows)
+            {
+                if (row.RowID % 10000 == 0)
+                {
+                    Console.WriteLine("{0} Elapsed time => {1}", row.RowID, sw.Elapsed.Seconds);
+                    sw.Restart();
+                }
+
+                string cadNum = row["CAD_NUM"];
+                if (cadNum.Length > 10)
+                {
+                    var data = cadNums.FirstOrDefault(p => p.Key.Item1.Equals(cadNum, StringComparison.InvariantCulture)).Value;
+                    if (data != null)
+                    {
+                        row["VRI"] = data.outputData.VRI_List;
+                        row["Type"] = data.outputData.Type;
+                        row["Kind"] = data.outputData.Kind;
+                    }
+                }
+            }
         }
 
         private void BDTemp()
@@ -177,9 +210,9 @@ namespace ConsoleControl
 
             Table tab = mapinfo.GetTable();
 
-            
 
-            
+
+
 
             DMapInfo inst = map.mapInfo.instance;
             DMIMapGen mapGen = inst.MIMapGen;
