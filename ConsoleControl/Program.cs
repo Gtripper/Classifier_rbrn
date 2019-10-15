@@ -16,6 +16,12 @@ namespace ConsoleControl
     {
         static void Main()
         {
+            var max = JsonReader.Plots.GetPlots().Proprties.Max(q => q.VriDoc?.Length ?? 0);
+            var plot = JsonReader.Plots.GetPlots().Proprties.FirstOrDefault(p => p.VriDoc?.Length == max);
+            if (plot != null)
+                Console.WriteLine(plot.CadNum);
+
+
             MapInfo2 mapInfo2 = new MapInfo2();
             mapInfo2.Execute();
         }

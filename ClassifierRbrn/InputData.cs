@@ -100,7 +100,7 @@ namespace Classifier
                     BtiVri += string.IsNullOrEmpty(BtiVri) ? btiVri : ", " + btiVri;
                 }
 
-                var houses = plot.Buildings.Where(p => p.BuildingClass.Equals("многоквартирный дом"));
+                var houses = plot.Buildings.Where(p => p.BuildingPurpose.Equals("многоквартирный дом"));
                 if (houses.Any())
                 {
                     var nStoreys = houses.Select(p =>

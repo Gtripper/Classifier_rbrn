@@ -103,7 +103,7 @@ namespace Classifier
             baseCodes.Add("3.8", new List<string> { "3.8.1", "3.8.2" });
             baseCodes.Add("3.9", new List<string> { "3.9.1", "3.9.2", "3.9.3" });
             baseCodes.Add("3.10", new List<string> { "3.10.1", "3.10.2" });
-            baseCodes.Add("4.0.0", new List<string> { "4.1", "4.2", "4.3", "4.4", "4.5",
+            baseCodes.Add("4.0", new List<string> { "4.1", "4.2", "4.3", "4.4", "4.5",
                 "4.6", "4.7", "4.8", "4.8.1", "4.8.2", "4.8.3", "4.9", "4.9.1", "4.9.1.1",
                     "4.9.1.2", "4.9.1.3", "4.9.1.4", "4.10" });
             baseCodes.Add("4.9.1", new List<string> { "4.9.1.1", "4.9.1.2", "4.9.1.3", "4.9.1.4" });
