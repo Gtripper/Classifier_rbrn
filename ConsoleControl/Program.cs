@@ -14,16 +14,70 @@ namespace ConsoleControl
 {
     class Program
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Не передавать литералы в качестве локализованных параметров", Justification = "<Ожидание>")]
         static void Main()
         {
-            var max = JsonReader.Plots.GetPlots().Proprties.Max(q => q.VriDoc?.Length ?? 0);
-            var plot = JsonReader.Plots.GetPlots().Proprties.FirstOrDefault(p => p.VriDoc?.Length == max);
-            if (plot != null)
-                Console.WriteLine(plot.CadNum);
+            var mf = new Classifier.Nodes.NodesCollection();            
 
+            var app = new MapInfoAppControls(new MapinfoCurrentApp());
+            app.TablesShow();
 
-            MapInfo2 mapInfo2 = new MapInfo2();
-            mapInfo2.Execute();
+            Context context = null;
+            try
+            {
+                context = new Context();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                context.Dispose();
+            }
+
+            var table = app.GetTable();
+            Console.WriteLine("Number of rows is: {0}", table.Lenght);
+            var sw = new Stopwatch();
+            sw.Start();
+            foreach (var val in table.Rows)
+            {
+                
+                 Console.WriteLine("{0} rows was comleted", val.RowID);                
+                
+
+                try
+                {
+                    string vri_egrn = string.IsNullOrEmpty(val["Наименование_ОКС"]) ? val["Назначение"] : val["Наименование_ОКС"];                    
+                    string vri_dgi = val["ДГИ_назначение"];
+
+                    if (!string.IsNullOrEmpty(vri_egrn))
+                    {
+                        Classifier.InputData data = new Classifier.InputData(vri_egrn, 600);
+                        Classifier.Factory factory = new Classifier.Factory(data);
+                        factory.Execute();
+                        var vri = factory.outputData.VRI_List;
+                        val["VRI_EGRN"] = vri;
+                    }
+
+                    if (!string.IsNullOrEmpty(vri_dgi))
+                    {
+                        Classifier.InputData data = new Classifier.InputData(vri_dgi, 600);
+                        Classifier.Factory factory = new Classifier.Factory(data);
+                        factory.Execute();
+                        var vri = factory.outputData.VRI_List;
+                        val["VRI_DGI"] = vri;
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
+            }
+
+            sw.Stop();
         }
 
         private static DateTime? dtConvert(string date)
