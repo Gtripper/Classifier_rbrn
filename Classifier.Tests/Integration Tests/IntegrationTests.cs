@@ -813,7 +813,7 @@ namespace Classifier.Tests
 
             Assert.AreEqual(expectedType, actual);
         }
-        [TestCase("участки размещения учебно-восспитательных объектов: объекты размещения учреждений кружковой деятельности и учреждений для организации", 1000)]
+        [TestCase("участки размещения учебно-восспитательных объектов: объекты размещения учреждений кружковой деятельности и учреждений для организации", 2003)]
         public void IFactory_Kind_24(string vriDoc, int expectedKind)
         {
             int actual = IFactoryKindHelper(vriDoc);
@@ -821,6 +821,263 @@ namespace Classifier.Tests
             Assert.AreEqual(expectedKind, actual);
         }
 
+
+
+
+        [TestCase(@"осуществления учебно-воспитательной деятельности (прогулочная площадка)", "3.5.1, 12.0.2")]
+        public void ICodeSeeker_VRI_25(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"осуществления учебно-воспитательной деятельности (прогулочная площадка)", "3.5.1, 12.0.2")]
+        public void IFactory_VRI_25(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase("осуществления учебно-воспитательной деятельности (прогулочная площадка)", 100)]
+        public void IFactory_Type_25(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase("осуществления учебно-воспитательной деятельности (прогулочная площадка)", 2003)]
+        public void IFactory_Kind_25(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"Размещение объектов капитального строительства, предназначенных для профессионального образования и просвещения (профессиональные тех", "3.5, 3.5.2")]
+        public void ICodeSeeker_VRI_26(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"Размещение объектов капитального строительства, предназначенных для профессионального образования и просвещения (профессиональные тех", "3.5.2")]
+        public void IFactory_VRI_26(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase("Размещение объектов капитального строительства, предназначенных для профессионального образования и просвещения (профессиональные тех", 100)]
+        public void IFactory_Type_26(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase("Размещение объектов капитального строительства, предназначенных для профессионального образования и просвещения (профессиональные тех", 1002)]
+        public void IFactory_Kind_26(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+
+        [TestCase(@"эксплуатация зданий и сооружений дома аспиранта и студента", "3.5.2")]
+        public void ICodeSeeker_VRI_27(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"эксплуатация зданий и сооружений дома аспиранта и студента", "3.5.2")]
+        public void IFactory_VRI_27(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase("эксплуатация зданий и сооружений дома аспиранта и студента", 100)]
+        public void IFactory_Type_27(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase("эксплуатация зданий и сооружений дома аспиранта и студента", 1002)]
+        public void IFactory_Kind_27(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+
+        [TestCase(@"эксплуатации здания спортивного интерната ЦСКА", "3.5.1")]
+        public void ICodeSeeker_VRI_28(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"эксплуатации здания спортивного интерната ЦСКА", "3.5.1")]
+        public void IFactory_VRI_28(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase("эксплуатации здания спортивного интерната ЦСКА", 100)]
+        public void IFactory_Type_28(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase("эксплуатации здания спортивного интерната ЦСКА", 2003)]
+        public void IFactory_Kind_28(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"эксплуатации зданий кафедры оперативной хирургии.", "3.5.2")]
+        public void ICodeSeeker_VRI_29(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"эксплуатации зданий кафедры оперативной хирургии.", "3.5.2")]
+        public void IFactory_VRI_29(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase("эксплуатации зданий кафедры оперативной хирургии.", 100)]
+        public void IFactory_Type_29(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase("эксплуатации зданий кафедры оперативной хирургии.", 1002)]
+        public void IFactory_Kind_29(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"Для размещения временной площадки для проведения занятий по контраварийной подготовке водителей", "3.5.2")]
+        public void ICodeSeeker_VRI_30(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"Для размещения временной площадки для проведения занятий по контраварийной подготовке водителей", "3.5.2")]
+        public void IFactory_VRI_30(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase("Для размещения временной площадки для проведения занятий по контраварийной подготовке водителей", 100)]
+        public void IFactory_Type_30(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase("Для размещения временной площадки для проведения занятий по контраварийной подготовке водителей", 1002)]
+        public void IFactory_Kind_30(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"эксплуатации здания центра творчества", "3.6.1")]
+        public void ICodeSeeker_VRI_31(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"эксплуатации здания центра творчества", "3.6.1")]
+        public void IFactory_VRI_31(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"эксплуатации здания центра творчества", 100)]
+        public void IFactory_Type_31(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"эксплуатации здания центра творчества",  1003)]
+        public void IFactory_Kind_31(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"участки размещения спортивно-рекреационных объектов: объекты размещения помещений и технических устройств крытых спортивных сооружений ограниченного посещения (1.2.17); участки размещения учебно-воспитательных объектов: объекты размещения кружковой деятельности и учреждений для организации досуговой работы с населением по месту жительства, в т.ч. детского творчества (1.2.17)", "3.5.1, 5.1.2")]
+        public void ICodeSeeker_VRI_32(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"участки размещения спортивно-рекреационных объектов: объекты размещения помещений и технических устройств крытых спортивных сооружений ограниченного посещения (1.2.17); участки размещения учебно-воспитательных объектов: объекты размещения кружковой деятельности и учреждений для организации досуговой работы с населением по месту жительства, в т.ч. детского творчества (1.2.17)", "3.5.1, 5.1.2")]
+        public void IFactory_VRI_32(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"участки размещения спортивно-рекреационных объектов: объекты размещения помещений и технических устройств крытых спортивных сооружений ограниченного посещения (1.2.17); участки размещения учебно-воспитательных объектов: объекты размещения кружковой деятельности и учреждений для организации досуговой работы с населением по месту жительства, в т.ч. детского творчества (1.2.17)", 100)]
+        public void IFactory_Type_32(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"участки размещения спортивно-рекреационных объектов: объекты размещения помещений и технических устройств крытых спортивных сооружений ограниченного посещения (1.2.17); участки размещения учебно-воспитательных объектов: объекты размещения кружковой деятельности и учреждений для организации досуговой работы с населением по месту жительства, в т.ч. детского творчества (1.2.17)", 1200)]
+        public void IFactory_Kind_32(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
 
 
 
