@@ -1114,6 +1114,324 @@ namespace Classifier.Tests
 
 
 
+        [TestCase(@"РАЗВИТИЯ И ЭКСПЛУАТАЦИИ РЕЗИДЕНЦИИ ПАТРИАРХОВ МОСКОВСКИХ И ВСЕЯ РУСИ, ЦЕНТРА ПРАВОСЛАВНОГО НАСЛЕДИЯ, СТРОИТЕЛЬСТВА И ДАЛЬНЕЙШЕЙ ЭКСПЛУА", "3.7.1")]
+        public void ICodeSeeker_VRI_34(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"РАЗВИТИЯ И ЭКСПЛУАТАЦИИ РЕЗИДЕНЦИИ ПАТРИАРХОВ МОСКОВСКИХ И ВСЕЯ РУСИ, ЦЕНТРА ПРАВОСЛАВНОГО НАСЛЕДИЯ, СТРОИТЕЛЬСТВА И ДАЛЬНЕЙШЕЙ ЭКСПЛУА", "3.7.1")]
+        public void IFactory_VRI_34(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"РАЗВИТИЯ И ЭКСПЛУАТАЦИИ РЕЗИДЕНЦИИ ПАТРИАРХОВ МОСКОВСКИХ И ВСЕЯ РУСИ, ЦЕНТРА ПРАВОСЛАВНОГО НАСЛЕДИЯ, СТРОИТЕЛЬСТВА И ДАЛЬНЕЙШЕЙ ЭКСПЛУА", 100)]
+        public void IFactory_Type_34(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"РАЗВИТИЯ И ЭКСПЛУАТАЦИИ РЕЗИДЕНЦИИ ПАТРИАРХОВ МОСКОВСКИХ И ВСЕЯ РУСИ, ЦЕНТРА ПРАВОСЛАВНОГО НАСЛЕДИЯ, СТРОИТЕЛЬСТВА И ДАЛЬНЕЙШЕЙ ЭКСПЛУА", 1003)]
+        public void IFactory_Kind_34(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"для проведения комплекса ремонтно-реставрационных работ, приспособления ансамбля Марфо-Мариинской Обители и дальнейшей эксплуатации зд", "3.7.1")]
+        public void ICodeSeeker_VRI_35(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"для проведения комплекса ремонтно-реставрационных работ, приспособления ансамбля Марфо-Мариинской Обители и дальнейшей эксплуатации зд", "3.7.1")]
+        public void IFactory_VRI_35(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"для проведения комплекса ремонтно-реставрационных работ, приспособления ансамбля Марфо-Мариинской Обители и дальнейшей эксплуатации зд", 100)]
+        public void IFactory_Type_35(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"для проведения комплекса ремонтно-реставрационных работ, приспособления ансамбля Марфо-Мариинской Обители и дальнейшей эксплуатации зд", 1003)]
+        public void IFactory_Kind_35(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"строительства и последующей эксплуатации комплекса дипломатического представительства республики корея и других связанных с ним сооруж", "3.8.2")]
+        public void ICodeSeeker_VRI_36(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"строительства и последующей эксплуатации комплекса дипломатического представительства республики корея и других связанных с ним сооруж", "3.8.2")]
+        public void IFactory_VRI_36(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"строительства и последующей эксплуатации комплекса дипломатического представительства республики корея и других связанных с ним сооруж", 100)]
+        public void IFactory_Type_36(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"строительства и последующей эксплуатации комплекса дипломатического представительства республики корея и других связанных с ним сооруж", 1001)]
+        public void IFactory_Kind_36(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"РАЗРАБОТКИ ИСХОДНО-РАЗРЕШИТЕЛЬНОЙ И ПРОЕКТНОЙ ДОКУМЕНТАЦИИ, СТРОИТЕЛЬСТВА И ДАЛЬНЕЙШЕЙ  ЭКСПЛУАТАЦИИ МНОГОФУНКЦИОНАЛЬНОГО АДМИНИСТРАТ", "4.0")]
+        public void ICodeSeeker_VRI_37(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"РАЗРАБОТКИ ИСХОДНО-РАЗРЕШИТЕЛЬНОЙ И ПРОЕКТНОЙ ДОКУМЕНТАЦИИ, СТРОИТЕЛЬСТВА И ДАЛЬНЕЙШЕЙ  ЭКСПЛУАТАЦИИ МНОГОФУНКЦИОНАЛЬНОГО АДМИНИСТРАТ", "4.0")]
+        public void IFactory_VRI_37(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"РАЗРАБОТКИ ИСХОДНО-РАЗРЕШИТЕЛЬНОЙ И ПРОЕКТНОЙ ДОКУМЕНТАЦИИ, СТРОИТЕЛЬСТВА И ДАЛЬНЕЙШЕЙ  ЭКСПЛУАТАЦИИ МНОГОФУНКЦИОНАЛЬНОГО АДМИНИСТРАТ", 100)]
+        public void IFactory_Type_37(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"РАЗРАБОТКИ ИСХОДНО-РАЗРЕШИТЕЛЬНОЙ И ПРОЕКТНОЙ ДОКУМЕНТАЦИИ, СТРОИТЕЛЬСТВА И ДАЛЬНЕЙШЕЙ  ЭКСПЛУАТАЦИИ МНОГОФУНКЦИОНАЛЬНОГО АДМИНИСТРАТ", 1000)]
+        public void IFactory_Kind_37(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"предпринимательство", "4.0")]
+        public void ICodeSeeker_VRI_38(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"предпринимательство", "4.0")]
+        public void IFactory_VRI_38(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"предпринимательство", 100)]
+        public void IFactory_Type_38(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"предпринимательство", 1000)]
+        public void IFactory_Kind_38(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"предпринимательство", "4.0")]
+        public void ICodeSeeker_VRI_39(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"предпринимательство", "4.0")]
+        public void IFactory_VRI_39(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"предпринимательство", 100)]
+        public void IFactory_Type_39(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"предпринимательство", 1000)]
+        public void IFactory_Kind_39(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"эксплуатации имущественного комплекса дирекции", "4.1")]
+        public void ICodeSeeker_VRI_40(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"эксплуатации имущественного комплекса дирекции", "4.1")]
+        public void IFactory_VRI_40(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"эксплуатации имущественного комплекса дирекции", 100)]
+        public void IFactory_Type_40(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"эксплуатации имущественного комплекса дирекции", 1001)]
+        public void IFactory_Kind_40(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"участки размещения административно-деловых объектов: объекты размещения офисных помещений (1.2.7), участки размещения жилищно-коммунальных", "3.1.1, 4.1")]
+        public void ICodeSeeker_VRI_41(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"участки размещения административно-деловых объектов: объекты размещения офисных помещений (1.2.7), участки размещения жилищно-коммунальных", "4.1")]
+        public void IFactory_VRI_41(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"участки размещения административно-деловых объектов: объекты размещения офисных помещений (1.2.7), участки размещения жилищно-коммунальных", 100)]
+        public void IFactory_Type_41(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"участки размещения административно-деловых объектов: объекты размещения офисных помещений (1.2.7), участки размещения жилищно-коммунальных", 1001)]
+        public void IFactory_Kind_41(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+
+        [TestCase("проектирования, строительства и дальнейшей эксплуатации торгово-коммерческого комплекса и трансформаторной подстанции (11 обособленных", "3.1.1, 4.2")]
+        public void ICodeSeeker_VRI_42(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase("проектирования, строительства и дальнейшей эксплуатации торгово-коммерческого комплекса и трансформаторной подстанции (11 обособленных", "4.2")]
+        public void IFactory_VRI_42(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"проектирования, строительства и дальнейшей эксплуатации торгово-коммерческого комплекса и трансформаторной подстанции (11 обособленных", 100)]
+        public void IFactory_Type_42(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"проектирования, строительства и дальнейшей эксплуатации торгово-коммерческого комплекса и трансформаторной подстанции (11 обособленных", 1004)]
+        public void IFactory_Kind_42(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
+
+
+
+        [TestCase(@"под размещение комплекса под реализацию сельскохозяйственной продукции,продовольственных продуктов и иных необходимых товаров с обустр", "4.2")]
+        public void ICodeSeeker_VRI_43(string vriDoc, string expectedVri)
+        {
+            string actual = ICodeSeekerHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"под размещение комплекса под реализацию сельскохозяйственной продукции,продовольственных продуктов и иных необходимых товаров с обустр", "4.2")]
+        public void IFactory_VRI_43(string vriDoc, string expectedVri)
+        {
+            string actual = IFactoryVRYHelper(vriDoc);
+
+            Assert.AreEqual(expectedVri, actual);
+        }
+        [TestCase(@"под размещение комплекса под реализацию сельскохозяйственной продукции,продовольственных продуктов и иных необходимых товаров с обустр", 100)]
+        public void IFactory_Type_43(string vriDoc, int expectedType)
+        {
+            int actual = IFactoryTypeHelper(vriDoc);
+
+            Assert.AreEqual(expectedType, actual);
+        }
+        [TestCase(@"под размещение комплекса под реализацию сельскохозяйственной продукции,продовольственных продуктов и иных необходимых товаров с обустр", 1004)]
+        public void IFactory_Kind_43(string vriDoc, int expectedKind)
+        {
+            int actual = IFactoryKindHelper(vriDoc);
+
+            Assert.AreEqual(expectedKind, actual);
+        }
+
         #endregion
     }
 }
