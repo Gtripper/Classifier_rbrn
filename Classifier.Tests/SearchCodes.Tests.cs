@@ -1,8 +1,7 @@
 ﻿using NUnit.Framework;
-using Classifier.Nodes;
 
 namespace Classifier.Tests
-{  
+{
     [TestFixture]
     public class ISearchCodesTests
     {

@@ -1,5 +1,4 @@
-﻿using Classifier.Nodes;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Classifier.Tests
 {

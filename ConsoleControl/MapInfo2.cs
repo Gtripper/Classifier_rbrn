@@ -37,8 +37,8 @@ namespace ConsoleControl
                     type = row["fs_tip"];
                 }
                 catch { continue; }
-                var newList = CodesMutator.Mutator.Execute(list, type, mf);
-                row["Vri_PZZ"] = newList;
+                //var newList = CodesMutator.Mutator.Execute(list, type, mf);
+                //row["Vri_PZZ"] = newList;
             }
         }
 
@@ -81,12 +81,12 @@ namespace ConsoleControl
                     kind = row["fs_vid"];
                 }
                 catch { continue; }
-                var error = CodesMutator.CheckCodes.CheckTypesIsConfirmityCodes(list, type, kind, ref dict, mf);
+                //int error = CodesMutator.CheckCodes.CheckTypesIsConfirmityCodes(list, type, kind, ref dict, mf);
                 list = "";
                 type = 0;
                 kind = 0;
 
-                row["Error"] = error;
+                //row["Error"] = error;
             }
         }
 

@@ -17,7 +17,11 @@ namespace ConsoleControl
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Не передавать литералы в качестве локализованных параметров", Justification = "<Ожидание>")]
         static void Main()
         {
-            var mf = new Classifier.Nodes.NodesCollection();            
+            var mf = new Classifier.Nodes.NodesCollection();
+
+            var codes = mf.Nodes.OrderByDescending(p => mf.Nodes.IndexOf(p)).Select(s => "\"" + s.Code + "\",\n").Aggregate<string>((s, res )=> res += s);
+
+            Console.WriteLine(codes);
 
             var app = new MapInfoAppControls(new MapinfoCurrentApp());
             app.TablesShow();

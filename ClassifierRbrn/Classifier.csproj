@@ -89,6 +89,7 @@
     <Compile Include="Codes.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="InputData.cs" />
+    <Compile Include="Nodes\Nodes.cs" />
     <Compile Include="Nodes\Node.cs" />
     <Compile Include="Nodes\NodeRegExp.cs" />
     <Compile Include="Nodes\NodesCollection.cs" />

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Classifier.Nodes
+namespace Classifier
 {
     public interface INodesCollection
     {

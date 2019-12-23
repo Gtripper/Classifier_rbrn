@@ -1,8 +1,4 @@
-﻿using Classifier.Nodes;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NUnit.Framework;
 
 namespace Classifier.Tests
 {

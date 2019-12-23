@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Classifier.Nodes;
 
 
 namespace Classifier
@@ -20,8 +16,6 @@ namespace Classifier
             if (intA > intB) return 1;
             if (intA < intB) return -1;
             else return 0;
-
-            throw new NotImplementedException();
         }
     }
 }

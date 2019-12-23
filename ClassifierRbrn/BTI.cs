@@ -1,6 +1,4 @@
-﻿using Classifier.Nodes;
-
-namespace Classifier
+﻿namespace Classifier
 {
     public interface IBTI
     {
